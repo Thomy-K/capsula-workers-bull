@@ -24,3 +24,6 @@ docker compose up -d --scale worker={number_of_workers}
 The architecture of the project is the following
 
 ![Architecture](images/architecture.png)
+
+## Note: 
+The code is a little bit different from the video, it has a little better directory structure and enviroment variables handling. I Advise to read de documentation of bull and the code for a better understanding of the implementation in this repository.
