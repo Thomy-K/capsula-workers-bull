@@ -3,8 +3,9 @@
 This repository is a simple [worker architecture](https://www.enterpriseintegrationpatterns.com/patterns/messaging/CompetingConsumers.html) implementation in node using the [Bull](https://github.com/taskforcesh/bullmq) library, including:
 
 - Producers
+- Message Broker (Redis)
 - Consumers
-- Listeners
+- Dashboard
 
 All the components of the system are dockerized, so every component can be scaled to hold a higher throughput of work.
 
@@ -24,7 +25,7 @@ docker compose up -d --scale worker={number_of_workers}
 
 ## Documentation:
 
-- [Bull docs](https://github.com/OptimalBits/bull/tree/develop/docs)
+- [Bull docs](https://docs.bullmq.io/)
 
 The architecture of the project is the following
 
