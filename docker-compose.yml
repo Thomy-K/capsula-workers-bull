@@ -1,37 +1,27 @@
 services:
   producer:
     build: 
-      context: ./task-service/producers
+      context: ./worker-service/producers
       dockerfile: Dockerfile
     networks:
-      - task-network
+      - worker
     environment:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_HOST=redis
 
-  worker:
+  consumer:
     build: 
-      context: ./task-service/workers
+      context: ./worker-service/consumers
       dockerfile: Dockerfile
     networks:
-      - task-network
+      - worker
     environment:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_HOST=redis
-
-  listener:
-    build: 
-      context: ./task-service/listeners
-      dockerfile: Dockerfile
-    networks:
-      - task-network
-    environment:
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - REDIS_HOST=redis
-
+    deploy:
+      replicas: 2
 
   redis:
     image: redis
@@ -40,8 +30,21 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - task-network
+      - worker
+
+  board:
+    build: 
+      context: ./worker-service/board
+      dockerfile: Dockerfile
+    networks:
+      - worker
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
+    ports:
+      - 3000:3000
 
 networks:
-  task-network:
+  worker:
     driver: bridge
